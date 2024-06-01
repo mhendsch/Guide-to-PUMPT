@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Making Content &#8212; Guide to creating an e-textbook using Pumpt 0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=0868e8a2" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=e031e9a9"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Making User Models" href="models.html" />
+    <link rel="prev" title="E-Textbook Installation Guide (Windows)" href="installation-guide.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="making-content">
+<h1>Making Content<a class="headerlink" href="#making-content" title="Permalink to this heading">¶</a></h1>
+<p>In order to make content, we use Restructured Text Language. A comprehensive guide to the most common
+functionalities of Sphinx can be found on the <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html">Sphinx Website</a>.
+However, I will cover the basics of creating an e-textbook.</p>
+<section id="creating-the-project">
+<h2>Creating the Project<a class="headerlink" href="#creating-the-project" title="Permalink to this heading">¶</a></h2>
+<p>First, in Ubuntu, run:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sphinx</span><span class="o">-</span><span class="n">quickstart</span> <span class="n">docs</span>
+</pre></div>
+</div>
+<p>When it asks if you want to separate source and build directories, type “y” (without quotes) then press enter.</p>
+<p>Next, when it asks for the Project Name, input what you want to name your textbook.</p>
+<p>Write your name for the Author Name.</p>
+<p>For Project Release, it can be any number, but you should probably start with “0.1”.</p>
+<p>When it prompts you for the language, press enter to stay with the default (English).</p>
+<p>After these, prompts, a docs folder will be created, with build and source folders, as well as the makefiles for the textbook. You’ll notice that this is the same as it is in the example textbook.</p>
+<p>To render the textbook as an HTML for the first time, type:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sphinx</span><span class="o">-</span><span class="n">build</span> <span class="o">-</span><span class="n">M</span> <span class="n">html</span> <span class="n">docs</span><span class="o">/</span><span class="n">source</span><span class="o">/</span> <span class="n">docs</span><span class="o">/</span><span class="n">build</span><span class="o">/</span>
+</pre></div>
+</div>
+<p>In your Ubuntu folder, you can go to <strong>/docs/build/html</strong> and double click the index.html file in order to open it in a browser.</p>
+</section>
+<section id="writing-text">
+<h2>Writing Text<a class="headerlink" href="#writing-text" title="Permalink to this heading">¶</a></h2>
+<p>Navigate to <strong>docs/source</strong> and open index.rst in a text or code editor.</p>
+<p>Modify it to look as follows:</p>
+<div class="highlight-RST notranslate"><div class="highlight"><pre><span></span><span class="gh">Welcome to Guide to Creating an E-textbook using Pumpt&#39;s documentation!</span>
+<span class="gh">=======================================================================</span>
+
+
+You can write here and it will appear in your HTML file! The ====== denotes
+that the text above is a heading. There have to be at least as many &quot;=&quot; as
+there are characters in the heading. If I wanted to emphasize that I would
+surround it with <span class="ge">*asterisks (This will usually make it italic).*</span> Similarly
+if I wanted to strongly emphasize it, I would use **double asterisks (This
+will typically make it bold).**
+Pressing enter will not start a new paragraph unless you press it twice.
+
+This will be a new paragraph.
+
+<span class="gh">Subsection 1</span>
+<span class="gh">----------------</span>
+
+The ----- indicates that the text above is a subsection heading.
+</pre></div>
+</div>
+<p>Once you’ve done this, save it and then cd into docs. Then, type:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">html</span>
+</pre></div>
+</div>
+<p>Once you do this, index.html will be updated. Refresh your browser or reopen the file to see your changes.
+You’ll notice that underlining text with “====” or “—–” will make it a heading, while encasing it with asterisks
+will emphasize it.</p>
+</section>
+<section id="adding-images">
+<h2>Adding Images<a class="headerlink" href="#adding-images" title="Permalink to this heading">¶</a></h2>
+<p>Now that you know how to write in your textbook, let’s cover how to add images.</p>
+<p>Fortunately, RST makes it pretty easy to add images:</p>
+<div class="highlight-RST notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">image</span><span class="p">::</span> ImagePath/myImage.png
+    <span class="nc">:width:</span> 10cm
+    <span class="nc">:align:</span> center
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">..</span> <span class="pre">image::</span></code> is called a <em>directive</em> and will display the image at ImagePath. I recommend creating a new folder in <strong>docs/source</strong> called “Images”.
+You can then put images into this folder, and reference it with the image directive. For example, if you had an image called “pictureDay2022.png” in the
+Images folder, your directive would look like this:</p>
+<div class="highlight-RST notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">image</span><span class="p">::</span> Images/pictureDay2022.png
+    <span class="nc">:width:</span> 10cm
+    <span class="nc">:align:</span> center
+</pre></div>
+</div>
+<p>There are several parameters you can specify in the image directive. In the above example, I specify the alignment of the image as well as its width.
+You can also specify the height of the image using the <code class="docutils literal notranslate"><span class="pre">:height:</span></code> parameter. You should be careful to only specify width <strong>or</strong> height, as specifying both
+can stretch the image.</p>
+<p>Once you add the image direcitve to your textbook, once again update the HTML by typing:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">html</span>
+</pre></div>
+</div>
+</section>
+<section id="adding-pages">
+<h2>Adding Pages<a class="headerlink" href="#adding-pages" title="Permalink to this heading">¶</a></h2>
+<p>Most textbooks have more than one page, so in this section we’ll cover how to add pages to your textbook.</p>
+<p>In <strong>docs/source</strong>, create another rst file. You can name it whatever you want, but for simplicity I’ll call it <strong>myContent.rst</strong>.</p>
+<p>Modify the file however you want:</p>
+<div class="highlight-RST notranslate"><div class="highlight"><pre><span></span><span class="gh">My Content Here</span>
+<span class="gh">==================</span>
+
+This is my second page! How exciting.
+
+<span class="gh">This is a subheading</span>
+<span class="gh">------------------------</span>
+
+Here&#39;s some more content.
+
+<span class="p">..</span> <span class="ow">image</span><span class="p">::</span> Images/myPicture.png
+    <span class="nc">:height:</span> 10cm
+    <span class="nc">:align:</span> center
+
+Pictured above: a helpful image to help you understand the content.
+</pre></div>
+</div>
+<p>Save the file. Now, in the file <strong>index.rst</strong> (the one we were modifying earlier), add the following to the end of the file:</p>
+<div class="highlight-RST notranslate"><div class="highlight"><pre><span></span><span class="gh">Contents</span>
+<span class="gh">----------</span>
+
+<span class="p">..</span> <span class="ow">toctree</span><span class="p">::</span>
+
+    myContent
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">..</span> <span class="pre">toctree::</span></code> is a toctree directive. It creates a <strong>T</strong>able <strong>o</strong>f  <strong>C</strong>ontents tree that connects <strong>myContent.rst</strong> to <strong>index.rst</strong>.</p>
+<p>Congrats! You’ve created another page. Run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">html</span></code> and in your sidebar you should now be able to click on the page you just made and see its contents.</p>
+</section>
+<section id="adding-questions">
+<h2>Adding Questions<a class="headerlink" href="#adding-questions" title="Permalink to this heading">¶</a></h2>
+<p>In order to add questions, I recommend installing the example E-text and creating new pages off of that, as it will have the necessary functions that allow the
+questions to function. You could try installing all the dependencies into a fresh textbook, but there’s no guarantee it will work.</p>
+<section id="mcq-s">
+<h3>MCQ’s<a class="headerlink" href="#mcq-s" title="Permalink to this heading">¶</a></h3>
+<p>Multiple choice questions can be created using the code like this:</p>
+<div class="highlight-RST notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">raw</span><span class="p">::</span> html
+
+
+        &lt;div class=&quot;mcq&quot;&gt;
+                &lt;p&gt;What is my favorite color?:<span class="nt">&lt;/p&gt;</span>
+        &lt;form name=Q1 id=&quot;Q1&quot; data-component=&quot;binary&quot;&gt;
+        &lt;input type=&quot;checkbox&quot; id=&quot;Q1A1&quot; value=&quot;&quot;&gt;&lt;label for=&quot;Q1A1&quot;&gt;Red&lt;/label&gt; &lt;span id=&quot;Q1A1-feedback&quot;&gt; &lt;/span&gt;&lt;br&gt;
+        &lt;input type=&quot;checkbox&quot; id=&quot;Q1A2&quot; value=&quot;correct&quot;&gt;&lt;label for=&quot;Q1A2&quot;&gt;Blue&lt;/label&gt; &lt;span id=&quot;Q1A2-feedback&quot;&gt; &lt;/span&gt;&lt;br&gt;
+        &lt;input type=&quot;checkbox&quot; id=&quot;Q1A3&quot; value=&quot;&quot;&gt;&lt;label for=&quot;Q1A3&quot;&gt;Yellow&lt;/label&gt; &lt;span id=&quot;Q1A3-feedback&quot;&gt; &lt;/span&gt;&lt;br&gt;
+        &lt;input type=&quot;checkbox&quot; id=&quot;Q1A4&quot; value=&quot;&quot;&gt;&lt;label for=&quot;Q1A4&quot;&gt;Green&lt;/label&gt; &lt;span id=&quot;Q1A4-feedback&quot;&gt; &lt;/span&gt;&lt;br&gt;
+                &lt;input type=&quot;button&quot; value=&quot;Check&quot; onclick=&quot;sendmcq(&#39;Q1&#39;)&quot;&gt;&lt;br&gt;
+        &lt;/form&gt;
+        &lt;script id=&quot;Q1-answers&quot; type=&quot;application/json&quot;&gt;
+        [   { &quot;ansid&quot;:&quot;Q1A1&quot;, &quot;answer&quot;: &quot;Red&quot;, &quot;feedback&quot;: &quot;Wrong.&quot;, &quot;result&quot;: &quot;&quot;  } ,
+        { &quot;ansid&quot;:&quot;Q1A2&quot;, &quot;answer&quot;: &quot;Blue&quot;, &quot;feedback&quot;: &quot;That&#39;s right!&quot;, &quot;result&quot;: &quot;correct&quot;  } ,
+        { &quot;ansid&quot;:&quot;Q1A3&quot;, &quot;answer&quot;: &quot;Yellow&quot;, &quot;feedback&quot;: &quot;Incorrect.&quot;, &quot;result&quot;: &quot;&quot;  } ,
+        { &quot;ansid&quot;:&quot;Q1A4&quot;, &quot;answer&quot;: &quot;Green&quot;, &quot;feedback&quot;: &quot;Wrong.&quot;, &quot;result&quot;: &quot;&quot;  }
+    ]
+    &lt;/script&gt;
+
+    &lt;/div&gt;
+</pre></div>
+</div>
+<p>If you put another question into your textbook, it’s important to change any instances of “Q1” to “Q2”, your next response will be “Q3”, etc.
+We will now cover each component of an MCQ question.</p>
+<div class="highlight-RST notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;div class=&quot;mcq&quot;&gt;</span>
+                &lt;p&gt;What is my favorite color?:<span class="nt">&lt;/p&gt;</span>
+</pre></div>
+</div>
+<p>The above code declares that the question is a multiple choice question, and <code class="docutils literal notranslate"><span class="pre">&lt;p&gt;What</span> <span class="pre">is</span> <span class="pre">my</span> <span class="pre">favorite</span> <span class="pre">color?:&lt;/p&gt;</span></code> is the question.</p>
+<div class="highlight-RST notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;form name=Q1 id=&quot;Q1&quot; data-component=&quot;binary&quot;&gt;</span>
+       &lt;input type=&quot;checkbox&quot; id=&quot;Q1A1&quot; value=&quot;&quot;&gt;&lt;label for=&quot;Q1A1&quot;&gt;Red&lt;/label&gt; &lt;span id=&quot;Q1A1-feedback&quot;&gt; &lt;/span&gt;&lt;br&gt;
+       &lt;input type=&quot;checkbox&quot; id=&quot;Q1A2&quot; value=&quot;correct&quot;&gt;&lt;label for=&quot;Q1A2&quot;&gt;Blue&lt;/label&gt; &lt;span id=&quot;Q1A2-feedback&quot;&gt; &lt;/span&gt;&lt;br&gt;
+       &lt;input type=&quot;checkbox&quot; id=&quot;Q1A3&quot; value=&quot;&quot;&gt;&lt;label for=&quot;Q1A3&quot;&gt;Yellow&lt;/label&gt; &lt;span id=&quot;Q1A3-feedback&quot;&gt; &lt;/span&gt;&lt;br&gt;
+       &lt;input type=&quot;checkbox&quot; id=&quot;Q1A4&quot; value=&quot;&quot;&gt;&lt;label for=&quot;Q1A4&quot;&gt;Green&lt;/label&gt; &lt;span id=&quot;Q1A4-feedback&quot;&gt; &lt;/span&gt;&lt;br&gt;
+</pre></div>
+</div>
+<p>This portion sets up the four answer choices. <code class="docutils literal notranslate"><span class="pre">&lt;label</span> <span class="pre">for=&quot;Q1A1&quot;&gt;Red&lt;/label&gt;</span></code> sets the text that the user sees.</p>
+<div class="highlight-RST notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;script id=&quot;Q1-answers&quot; type=&quot;application/json&quot;&gt;</span>
+        [   { &quot;ansid&quot;:&quot;Q1A1&quot;, &quot;answer&quot;: &quot;Red&quot;, &quot;feedback&quot;: &quot;Wrong.&quot;, &quot;result&quot;: &quot;&quot;  } ,
+        { &quot;ansid&quot;:&quot;Q1A2&quot;, &quot;answer&quot;: &quot;Blue&quot;, &quot;feedback&quot;: &quot;That&#39;s right!&quot;, &quot;result&quot;: &quot;correct&quot;  } ,
+        { &quot;ansid&quot;:&quot;Q1A3&quot;, &quot;answer&quot;: &quot;Yellow&quot;, &quot;feedback&quot;: &quot;Incorrect.&quot;, &quot;result&quot;: &quot;&quot;  } ,
+        { &quot;ansid&quot;:&quot;Q1A4&quot;, &quot;answer&quot;: &quot;Green&quot;, &quot;feedback&quot;: &quot;Wrong.&quot;, &quot;result&quot;: &quot;&quot;  }
+    ]
+    &lt;/script&gt;
+</pre></div>
+</div>
+<p>This sets up the feedback. You can change it to be whatever you’d like, such as giving the user hints to help arrive at the correct answer.</p>
+</section>
+<section id="fill-in-the-blank">
+<h3>Fill in the blank<a class="headerlink" href="#fill-in-the-blank" title="Permalink to this heading">¶</a></h3>
+<p>Fill in the blank questions can take a variety of responses, and give feedback based on those responses.</p>
+<div class="highlight-RST notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">raw</span><span class="p">::</span> html
+
+        &lt;div class=&quot;fitb&quot;&gt;
+                &lt;p&gt;38 + 24 is &lt;input type=&quot;text&quot; id=&quot;Q2&quot; data-component=&quot;binary&quot;&gt; Don&#39;t forget to carry the one.&lt;/p&gt;
+                &lt;button type=&quot;button&quot; onclick=&quot;sendfitb(&#39;Q2&#39;)&quot;&gt;Check&lt;/button&gt;
+        &lt;script id=&quot;Q2-answers&quot; type=&quot;application/json&quot;&gt;
+        [
+
+        { &quot;regex&quot;: &quot;62&quot;, &quot;feedback&quot;: &quot; Correct!&quot;, &quot;result&quot;: &quot;correct&quot;  } ,
+        { &quot;regex&quot;: &quot;52&quot;, &quot;feedback&quot;: &quot; Incorrect, don&#39;t forget to carry the one&quot;, &quot;result&quot;: &quot;incorrect&quot;  } ,
+        { &quot;regex&quot;: &quot;x&quot;, &quot;feedback&quot;: &quot; No. Try again.&quot;, &quot;result&quot;: &quot;incorrect&quot;  }         ]
+    &lt;/script&gt;
+    &lt;p id=&quot;Q2-feedback&quot;&gt; &lt;p&gt;
+
+    &lt;/div&gt;
+</pre></div>
+</div>
+<p>This uses similar principals as the multiple choice questions. Note how all instances of “Q1” have been replaced with “Q2”.
+The components of a fill in the blank question are similar as well.</p>
+<div class="highlight-RST notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;div class=&quot;fitb&quot;&gt;</span>
+                &lt;p&gt;38 + 24 is &lt;input type=&quot;text&quot; id=&quot;Q2&quot; data-component=&quot;binary&quot;&gt; Don&#39;t forget to carry the one.&lt;/p&gt;
+                &lt;button type=&quot;button&quot; onclick=&quot;sendfitb(&#39;Q2&#39;)&quot;&gt;Check&lt;/button&gt;
+</pre></div>
+</div>
+<p>The above code sets up the type of question, in this case <strong>F</strong>ill <strong>i</strong>n <strong>t</strong>he <strong>B</strong>lank. The <code class="docutils literal notranslate"><span class="pre">&lt;p&gt;38</span> <span class="pre">+</span> <span class="pre">24</span> <span class="pre">is</span> <span class="pre">&lt;input</span> <span class="pre">type=&quot;text&quot;</span> <span class="pre">id=&quot;Q2&quot;</span> <span class="pre">data-component=&quot;binary&quot;&gt;</span> <span class="pre">Don't</span> <span class="pre">forget</span> <span class="pre">to</span> <span class="pre">carry</span> <span class="pre">the</span> <span class="pre">one.&lt;/p&gt;</span></code>
+will set up the question text that the user sees. The next part: <code class="docutils literal notranslate"><span class="pre">&lt;button</span> <span class="pre">type=&quot;button&quot;</span> <span class="pre">onclick=&quot;sendfitb('Q2')&quot;&gt;Check&lt;/button&gt;</span></code> will set up the text that the user sees on the check answer button.</p>
+<div class="highlight-RST notranslate"><div class="highlight"><pre><span></span>{ &quot;regex&quot;: &quot;62&quot;, &quot;feedback&quot;: &quot; Correct!&quot;, &quot;result&quot;: &quot;correct&quot;  } ,
+{ &quot;regex&quot;: &quot;52&quot;, &quot;feedback&quot;: &quot; Incorrect, don&#39;t forget to carry the one&quot;, &quot;result&quot;: &quot;incorrect&quot;  } ,
+{ &quot;regex&quot;: &quot;x&quot;, &quot;feedback&quot;: &quot; No. Try again.&quot;, &quot;result&quot;: &quot;incorrect&quot;  }
+</pre></div>
+</div>
+<p>This code will set up the answers to the question, as well as the feedback for each one. You can define specific answers and what their feedback will be.
+The code <code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">&quot;regex&quot;:</span> <span class="pre">&quot;x&quot;,</span> <span class="pre">&quot;feedback&quot;:</span> <span class="pre">&quot;</span> <span class="pre">No.</span> <span class="pre">Try</span> <span class="pre">again.&quot;,</span> <span class="pre">&quot;result&quot;:</span> <span class="pre">&quot;incorrect&quot;</span>&#160; <span class="pre">}</span></code> will make it so that any answer besides “62” or “52” will give the feedback: “ No. Try again.”</p>
+</section>
+<section id="likert-questions">
+<h3>Likert Questions<a class="headerlink" href="#likert-questions" title="Permalink to this heading">¶</a></h3>
+<p>A Likert scale is a rating scale that is used to gather opinions. Our Likert scale is on a scale of 1-5.</p>
+<p>You can create a Likert scale using the following code:</p>
+<div class="highlight-RST notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">raw</span><span class="p">::</span> html
+
+<span class="nt">&lt;div class=&quot;likert&quot;&gt;&lt;br&gt;</span>
+How confident are you that you understand geometry?
+<span class="nt">&lt;form id = &quot;C3&quot; data-component=&quot;binary&quot;&gt;</span>
+    Not confident
+<span class="nt">&lt;input type=&quot;radio&quot; name=&quot;C3&quot; id=&quot;C3A1&quot;&gt;</span>
+<span class="nt">&lt;input type=&quot;radio&quot; name=&quot;C3&quot; id=&quot;C3A2&quot;&gt;</span>
+<span class="nt">&lt;input type=&quot;radio&quot; name=&quot;C3&quot; id=&quot;C3A3&quot;&gt;</span>
+<span class="nt">&lt;input type=&quot;radio&quot; name=&quot;C3&quot; id=&quot;C3A4&quot;&gt;</span>
+<span class="nt">&lt;input type=&quot;radio&quot; name=&quot;C3&quot; id=&quot;C3A5&quot;&gt;</span>
+Very confident
+<span class="nt">&lt;input type=&quot;button&quot; value=&quot;Submit&quot; onclick=&quot;sendlik(&#39;C3&#39;,&#39;binary&#39;)&quot;&gt;&lt;br&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</pre></div>
+</div>
+<p>This will create a Likert scale with 5 options, from “Not confident” to “Very confident.”</p>
+<div class="highlight-RST notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;div class=&quot;likert&quot;&gt;&lt;br&gt;</span>
+How confident are you that you understand geometry?
+<span class="nt">&lt;form id = &quot;C3&quot; data-component=&quot;binary&quot;&gt;</span>
+    Not confident
+</pre></div>
+</div>
+<p>The above code will set up the question type, in this case a Likert scale. It sets up the question text that the user sees. It will also set up the first (leftmost) option to “Not confident”.</p>
+<div class="highlight-RST notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;input type=&quot;radio&quot; name=&quot;C3&quot; id=&quot;C3A1&quot;&gt;</span>
+<span class="nt">&lt;input type=&quot;radio&quot; name=&quot;C3&quot; id=&quot;C3A2&quot;&gt;</span>
+<span class="nt">&lt;input type=&quot;radio&quot; name=&quot;C3&quot; id=&quot;C3A3&quot;&gt;</span>
+<span class="nt">&lt;input type=&quot;radio&quot; name=&quot;C3&quot; id=&quot;C3A4&quot;&gt;</span>
+<span class="nt">&lt;input type=&quot;radio&quot; name=&quot;C3&quot; id=&quot;C3A5&quot;&gt;</span>
+Very confident
+</pre></div>
+</div>
+<p>The above code will set up the 5 buttons that the user can select. It will also set the last (rightmost) option to “Very confident.”</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Guide to creating an e-textbook using Pumpt</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">PUMPT Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example.html">Example Page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation-guide.html">E-Textbook Installation Guide (Windows)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Making Content</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#creating-the-project">Creating the Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#writing-text">Writing Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#adding-images">Adding Images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#adding-pages">Adding Pages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#adding-questions">Adding Questions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mcq-s">MCQ’s</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fill-in-the-blank">Fill in the blank</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#likert-questions">Likert Questions</a><ul class="simple">
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Making User Models</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="installation-guide.html" title="previous chapter">E-Textbook Installation Guide (Windows)</a></li>
+      <li>Next: <a href="models.html" title="next chapter">Making User Models</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2024, Matthew Hendsch.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      
+      |
+      <a href="_sources/content.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

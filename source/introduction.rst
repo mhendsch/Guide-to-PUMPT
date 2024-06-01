@@ -1,5 +1,6 @@
+############################################
 PUMPT Introduction
-======================
+############################################
 
 The Platform for User Model Personalized Textbooks (PUMPT), integrates data from multiple sources, 
 including e-textbooks and other learning tools. It uses this data to
@@ -16,3 +17,7 @@ for an introduction to the pub/sub server.
 
 .. bibliography:: references.bib
 
+.. toctree::
+
+    
+  

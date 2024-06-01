@@ -1,8 +1,11 @@
+##############
 Example Page
-==============
+##############
 
-The following page is an example of what can be done with 
-the PUMPT platform. 
+.. note ::
+   
+   The following page is an example of what can be done with 
+   the PUMPT platform. 
 
 
 .. raw:: html
@@ -246,4 +249,10 @@ Binary: Video
 
 
 [Next: `1.2 Numbers <1-2-numbers.html>`_]
+
+.. toctree::
+
+   
+  
+
 

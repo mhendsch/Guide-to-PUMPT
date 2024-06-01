@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>E-Textbook Installation Guide (Windows) &#8212; Guide to creating an e-textbook using Pumpt 0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=0868e8a2" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=e031e9a9"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Making Content" href="content.html" />
+    <link rel="prev" title="Example Page" href="example.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="e-textbook-installation-guide-windows">
+<h1>E-Textbook Installation Guide (Windows)<a class="headerlink" href="#e-textbook-installation-guide-windows" title="Permalink to this heading">¶</a></h1>
+<section id="dependencies">
+<h2><strong>Dependencies</strong><a class="headerlink" href="#dependencies" title="Permalink to this heading">¶</a></h2>
+<p>These dependencies are necessary to make the most of the E-textbook’s architecture, including OLM access and the ability to make your own pages.</p>
+<section id="wsl-linux">
+<h3>WSL (Linux)<a class="headerlink" href="#wsl-linux" title="Permalink to this heading">¶</a></h3>
+<p>A Windows Subsystem for Linux allows you to run a Linux environment on Windows. This is vital as this is how we’ll be interacting with the textbook to run the pub-sub server and create pages.
+Personally, I use Ubuntu, as it is pretty simple to use.
+Ubuntu can be installed <a class="reference external" href="https://ubuntu.com/download/desktop">here</a>. Alternatively, you can install it by typing into your terminal:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">wsl</span> <span class="o">--</span><span class="n">install</span>
+</pre></div>
+</div>
+<p>If you install Ubuntu, it will be helpful to know where your files are stored. Your files will probably be stored in:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\\<span class="n">Users</span>\\<span class="n">yourUsername</span>\\<span class="n">AppData</span>\\<span class="n">Local</span>\\<span class="n">Packages</span>\\<span class="n">CanonicalGroupLimited</span><span class="o">.</span><span class="n">UbuntuonWindows_79rhkp1fndgsc</span>\\<span class="n">LocalState</span>\\<span class="n">rootfs</span>\\<span class="n">home</span>\\<span class="n">ubuntuusername</span>
+</pre></div>
+</div>
+<p>“yourUsername” will be whatever your username on your machine is. ubuntuusername is the username you will create the first time you run Ubuntu.
+If you’re using Ubuntu, you should also run:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
+</pre></div>
+</div>
+<p>This will ensure that all of Ubuntu’s packages are properly up to date.</p>
+</section>
+<section id="python3">
+<h3>Python3<a class="headerlink" href="#python3" title="Permalink to this heading">¶</a></h3>
+<p>In order to run the necessary functions, Python3 must be installed on your computer. You can install python from the <a class="reference external" href="https://www.python.org/downloads/windows/">Python Website</a>. Alternatively, in Ubuntu you can type:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">python3</span>
+</pre></div>
+</div>
+<p>It will also help if you add python to your PATH.
+In environment variables, add the path:
+<code class="docutils literal notranslate"><span class="pre">C:\\Users\\yourUsername\\AppData\\Local\\Programs\\Python\\Launcher\\</span></code></p>
+</section>
+<section id="mosquitto">
+<h3>Mosquitto<a class="headerlink" href="#mosquitto" title="Permalink to this heading">¶</a></h3>
+<p>Our publish/subscribe path uses mosquitto, which can be installed from the <a class="reference external" href="https://mosquitto.org/download/">Mosquitto Website</a>. If you use the installation wizard, this step isn’t necessary as the wizard will download mosquitto for you. If something goes wrong with the wizard, or you choose to download from Github instead, then you can download mosquitto manually.</p>
+</section>
+<section id="sphinx">
+<h3>Sphinx<a class="headerlink" href="#sphinx" title="Permalink to this heading">¶</a></h3>
+<p>This textbook uses Sphinx to create HTML pages from Restructured Text files. If you wish to edit pages, I recommend following <a class="reference external" href="https://www.sphinx-doc.org/en/master/tutorial/index.html">this tutorial</a> first. Type the following into Ubuntu in order to download Sphinx:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">python3</span><span class="o">-</span><span class="n">sphinx</span>
+</pre></div>
+</div>
+<p>If you get a permission denied error, first type:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">su</span> <span class="n">root</span>
+</pre></div>
+</div>
+<p>and put in your Ubuntu password. Then try <code class="docutils literal notranslate"><span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">python3-sphinx</span></code> . If that still doesn’t work, then make sure you’ve run:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
+</pre></div>
+</div>
+<p>You can verify that sphinx is properly installed by running:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sphinx</span><span class="o">-</span><span class="n">build</span> <span class="o">--</span><span class="n">version</span>
+</pre></div>
+</div>
+<p>This should output sphinx-build 7.1.2 or whatever version of Sphinx you have.</p>
+</section>
+<section id="paho-mqtt">
+<h3>Paho-mqtt<a class="headerlink" href="#paho-mqtt" title="Permalink to this heading">¶</a></h3>
+<p>To download  paho-mqtt, which is another part of our pub/sub, simply type into Ubuntu:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">paho</span><span class="o">-</span><span class="n">mqtt</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="installation">
+<h2><strong>Installation</strong><a class="headerlink" href="#installation" title="Permalink to this heading">¶</a></h2>
+<section id="via-installation-wizard">
+<h3>Via installation wizard<a class="headerlink" href="#via-installation-wizard" title="Permalink to this heading">¶</a></h3>
+<p>This method is recommended for people who wish to read the textbook. If you wish to edit/create new pages, I recommend setting your installation path in step 2 to “home” in Ubuntu.</p>
+<a class="reference internal image-reference" href="_images/wizard-1.png"><img alt="_images/wizard-1.png" class="align-center" src="_images/wizard-1.png" style="width: 10cm;" /></a>
+<p>Click “Next”.</p>
+<a class="reference internal image-reference" href="_images/wizard-2.png"><img alt="_images/wizard-2.png" class="align-center" src="_images/wizard-2.png" style="width: 10cm;" /></a>
+<p>Click “Browse” to choose where to install the textbook. This will be about 100 MB.
+If you’re using Ubuntu and want to be able to make and edit your own pages, download this into:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\\<span class="n">Users</span>\\<span class="n">yourUsername</span>\\<span class="n">AppData</span>\\<span class="n">Local</span>\\<span class="n">Packages</span>\\<span class="n">CanonicalGroupLimited</span><span class="o">.</span><span class="n">UbuntuonWindows_79rhkp1fndgsc</span>\\<span class="n">LocalState</span>\\<span class="n">rootfs</span>\\<span class="n">home</span>\\<span class="n">yourubuntuusername</span>
+</pre></div>
+</div>
+<p>Choose whether to download the textbook for everyone on the PC or just yourself.
+Click “Next”.</p>
+<a class="reference internal image-reference" href="_images/wizard-3.png"><img alt="_images/wizard-3.png" class="align-center" src="_images/wizard-3.png" style="width: 10cm;" /></a>
+<p>Click “Next” one more time to download the textbook. If a pop-up appears, click “Yes”.</p>
+<a class="reference internal image-reference" href="_images/wizard-4.png"><img alt="_images/wizard-4.png" class="align-center" src="_images/wizard-4.png" style="width: 10cm;" /></a>
+<p>Click “Close”.
+Congrats! The textbook is now downloaded on your device! You can open the introduction to the textbook through the shortcut on your desktop or by searching for it on the start menu. Double clicking on the shortcut to simple.py will open simple.py in your preferred code editor (assuming you have one).</p>
+<a class="reference internal image-reference" href="_images/shortcuts.png"><img alt="_images/shortcuts.png" class="align-center" src="_images/shortcuts.png" style="height: 10cm;" /></a>
+<p>Pictured above: shortcuts to the textbook (<code class="docutils literal notranslate"><span class="pre">\\build\\html\\0-introduction.html</span></code>), and simple.py (<code class="docutils literal notranslate"><span class="pre">\\Simple\\simple.py</span></code>)</p>
+</section>
+<section id="uninstalling-the-textbook">
+<h3>Uninstalling the textbook<a class="headerlink" href="#uninstalling-the-textbook" title="Permalink to this heading">¶</a></h3>
+<p>If you wish to delete the textbook, simply search in settings for “add or remove programs”:</p>
+<a class="reference internal image-reference" href="_images/uninstall-1.png"><img alt="_images/uninstall-1.png" class="align-center" src="_images/uninstall-1.png" style="width: 10cm;" /></a>
+<p>Then search for “EText”, click the 3 dots and click “uninstall”:</p>
+<a class="reference internal image-reference" href="_images/uninstall-2.png"><img alt="_images/uninstall-2.png" class="align-center" src="_images/uninstall-2.png" style="width: 10cm;" /></a>
+<p>If a pop-up opens, click “Yes”. The textbook will then be uninstalled.</p>
+</section>
+<section id="via-github">
+<h3>Via Github<a class="headerlink" href="#via-github" title="Permalink to this heading">¶</a></h3>
+<p>This installation method is recommended for developers who want to edit the pages and be able to push their changes to Github. No shortcuts will be created, and you’ll have to download mosquitto manually.</p>
+<p><a class="reference external" href="https://github.com/bobkummerfeld/Etext/tree/main">Download the textbook from Github</a>.
+Make sure the code is in the “home” folder of your Ubuntu.</p>
+<p>The HTML pages will be under “\Etext\build\html”:</p>
+<a class="reference internal image-reference" href="_images/example-html.png"><img alt="_images/example-html.png" class="align-center" src="_images/example-html.png" style="width: 10cm;" /></a>
+<p>Clicking on any of these HTML files will open the page in your preferred browser. This folder is also where the pages you create will be stored.</p>
+<p>The RST files, which are the sources for the HTML pages, will be found in “\Etext\source”. Editing these are how you edit the HTML pages:</p>
+<a class="reference internal image-reference" href="_images/example-rst.png"><img alt="_images/example-rst.png" class="align-center" src="_images/example-rst.png" style="width: 10cm;" /></a>
+<p>The Restructured Text Files highlighted above are the types of files that you’ll edit to change the HTML pages.</p>
+<p>Simple.py can be found in “\Etext\Simple\simple.py”. You run this in order to listen for pub/subs. You should also replace the mosquitto.conf that you downloaded in your Program Files with the one in this folder:</p>
+<a class="reference internal image-reference" href="_images/example-simple.png"><img alt="_images/example-simple.png" class="align-center" src="_images/example-simple.png" style="width: 10cm;" /></a>
+<p>Pictured above: simple.py and mosquitto.conf.</p>
+</section>
+</section>
+<section id="editing-pages">
+<h2><strong>Editing Pages</strong><a class="headerlink" href="#editing-pages" title="Permalink to this heading">¶</a></h2>
+<p>Once you’ve installed the textbook and Sphinx as shown above, you can edit HTML pages or even add more. The steps to doing so are listed below.</p>
+<p>Navigate to “\Etext\source”. If you get the error “Cannot access ‘Etextbook’: directory not empty”,  take the “Etext” folder out of “Etextbook”, and delete “Etextbook.” You should then be able to cd into “Etext” without issue.
+Open any of the .rst files, or add your own.
+Edit the .rst files however you want. I recommend following the Sphinx tutorial before attempting this. If you get a permission denied error when trying to save your file, you probably downloaded the textbook into your Program Files. Try putting them into your Ubuntu folder instead.
+Once you’ve created/edited the RST file, you have to build/rebuild the HTML page. Do this by navigating to “\EText” in Ubuntu and type:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">html</span>
+</pre></div>
+</div>
+<p>If  you get the error “Permission Denied” when attempting to cd into “\EText”, see the section on Permission Denied.
+If you get the error “Could not import extension sphinxcontrib.bibtex”, then run:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">sphinxcontrib</span><span class="o">-</span><span class="n">bibtex</span>
+</pre></div>
+</div>
+<p>If done properly, then your HTML pages will be in “\Etext\build\html.” Clicking on them will open them in your browser.</p>
+</section>
+<section id="running-mosquitto">
+<h2><strong>Running Mosquitto</strong><a class="headerlink" href="#running-mosquitto" title="Permalink to this heading">¶</a></h2>
+<p>Mosquitto is our pub/sub program. Instructions to run it are below:</p>
+<p>Open a terminal as Administrator.
+In the terminal, navigate to the folder in which “mosquitto.conf” is stored. For me this is “C:\Program Files\mosquitto”.
+Type “mosquitto -v -c &lt;path to mosquitto.conf&gt;” into the terminal. This will run mosquitto in the background.
+Run simple.py and open one of the HTML files. You should start receiving messages.</p>
+</section>
+<section id="running-simple-py">
+<h2><strong>Running simple.py</strong><a class="headerlink" href="#running-simple-py" title="Permalink to this heading">¶</a></h2>
+<p>In order to send messages, you have to run simple.py. Fortunately this is pretty simple. There are two straightforward ways to run it:</p>
+<p>Preferred Method: Navigate to “\Etext\Simple\simple.py” and run it in your preferred code editor. Visual Studio Code seems to be the most consistent when it comes to running simple.py. Even running it in Ubuntu can cause issues.</p>
+<p>Navigate to “\Etext\Simple\simple.py” in Ubuntu and type:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="n">simple</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>See common errors here. Also keep in mind that simple.py will likely return an error if you don’t have mosquitto running first.</p>
+</section>
+<section id="personis">
+<h2><strong>Personis</strong><a class="headerlink" href="#personis" title="Permalink to this heading">¶</a></h2>
+<p>In order to create our Open Learner Model, we use the Personis system. Download Personis <a class="reference external" href="https://www.dropbox.com/scl/fi/z0x3msh1uswpwww224sb8/B2A-new.tgz?rlkey=77qtjqoxyhmep12ygzmk0s4uc&amp;dl=0">from this link</a>.  Make sure you put it into your Ubuntu directory, which will typically be at:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\\<span class="n">Users</span>\\<span class="n">username</span>\\<span class="n">AppData</span>\\<span class="n">Local</span>\\<span class="n">Packages</span>\\<span class="n">CanonicalGroupLimited</span><span class="o">.</span><span class="n">UbuntuonWindows_79rhkp1fndgsc</span>\\<span class="n">LocalState</span>\\<span class="n">rootfs</span>\\<span class="n">home</span>\\<span class="n">ubuntuusername</span>
+</pre></div>
+</div>
+<p>Next, unpack the Dropbox files by running the command:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tar</span> <span class="n">zxvf</span> <span class="n">B2A</span><span class="o">-</span><span class="n">new</span><span class="o">.</span><span class="n">tgz</span>
+</pre></div>
+</div>
+<p>This should unpack the files into your Ubuntu.
+You’ll have to change a couple of files in order to get it working. First, in /B2A/activate/bin , the file called “activate” needs line 40 changed to:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">VIRTUAL_ENV</span><span class="o">=</span><span class="s2">&quot;/home/ubuntuUsername/B2A/activate&quot;</span>
+</pre></div>
+</div>
+<p>Replace “ubuntuUsername” with your Ubuntu Username.</p>
+<p>Next, in /B2A , in the file named “doall”, change line 14 to:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">PERSONISPATH</span><span class="o">=/</span><span class="n">home</span><span class="o">/</span><span class="n">ubuntuUsername</span><span class="o">/</span><span class="n">B2A</span><span class="o">/</span><span class="n">Personis</span>
+</pre></div>
+</div>
+<p>Again replace “ubuntuUsername” with your Ubuntu Username. The path should be wherever you put the files from Dropbox.</p>
+<p>Now you’re all set to run Personis! First, cd into /B2A/PUML and run:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">venv</span> <span class="n">Personis</span>
+</pre></div>
+</div>
+<p>Then run:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="n">Personis</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
+</pre></div>
+</div>
+<p>Next, cd into /B2A/PUML/Personis and run:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pip3</span> <span class="n">install</span> <span class="n">simplejson</span> <span class="n">requests</span>
+</pre></div>
+</div>
+<p>Then cd into /B2A/PUML/Personis/Personis and run:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">Tests</span><span class="o">/</span><span class="n">base</span><span class="o">-</span><span class="n">tests</span>
+</pre></div>
+</div>
+<p>When it asks what directory to use, press enter. Then if it asks if you want to recreate the model, type y. Then press enter when it says “CR for all”. This should run the tests, and the output should look like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>====================================================================
+                        Tests/Base/example01_add.py
+====================================================================
+add evidence to Alice&#39;s model
+2024-05-19 20:49:42,424 &gt;&gt;&gt;&gt;Access: Alice::Tests/Models
+===================================================================
+Now check the evidence list for Alice&#39;s names
+===================================================================
+Component:  First name
+===================================================================
+showobj:
+Identifier = firstname
+Description = First name
+Explanation =
+component_type = attribute
+value_type = string
+value_list = None
+value = Alice
+resolver = None
+goals = []
+evidencelist = [{&#39;flags&#39;: [], &#39;evidence_type&#39;: &#39;explicit&#39;, &#39;source&#39;: &#39;alice&#39;, &#39;owner&#39;: &#39;alice&#39;, &#39;value&#39;: &#39;Alice&#39;, &#39;comment&#39;: None, &#39;creation_time&#39;: 1716166182.4706335, &#39;time&#39;: None, &#39;useby&#39;: None, &#39;objectType&#39;: &#39;Evidence&#39;}]
+objectType = Component
+
+.
+.
+.
+.
+.
+---------------------------------
+Continue?
+</pre></div>
+</div>
+</section>
+<section id="common-issues">
+<h2><strong>Common Issues</strong><a class="headerlink" href="#common-issues" title="Permalink to this heading">¶</a></h2>
+<section id="docutils">
+<h3>Docutils<a class="headerlink" href="#docutils" title="Permalink to this heading">¶</a></h3>
+<p>If you get an error with docutils, then make sure you install version 0.20.1.</p>
+</section>
+<section id="permission-denied">
+<h3>Permission Denied<a class="headerlink" href="#permission-denied" title="Permalink to this heading">¶</a></h3>
+<p>If you get the “Permission Denied” Error in Ubuntu, then type in <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">su</span> <span class="pre">root</span></code> and enter your Ubuntu password. This will give you root access, giving you sufficient permission to cd into the directory and <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">html</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>yourUsername@LAPTOP:~/docs$ make html
+make: Makefile: Permission denied
+make: *** No rule to make target &#39;html&#39;.  Stop.
+yourUsername@LAPTOP:~/docs$ sudo su root
+[sudo] password for yourUsername:
+root@LAPTOP:/home/yourUsername/docs# make html
+sphinx-build -M html &quot;source&quot; &quot;build&quot;
+Running Sphinx v7.1.2
+loading pickled environment... checking bibtex cache... up to date
+done
+building [mo]: targets for 0 po files that are out of date
+writing output...
+building [html]: targets for 0 source files that are out of date
+updating environment: 0 added, 0 changed, 0 removed
+reading sources...
+looking for now-outdated files... none found
+no targets are out of date.
+build succeeded.
+
+The HTML pages are in build/html.
+</pre></div>
+</div>
+</section>
+<section id="typeerror-client-init">
+<h3>TypeError: Client.__init__()<a class="headerlink" href="#typeerror-client-init" title="Permalink to this heading">¶</a></h3>
+<p>If you get the error: “TypeError: Client.__init__() missing 1 required positional argument: ‘callback_api_version’”.</p>
+<p>Change line 37 in simple.py from:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">client</span> <span class="o">=</span> <span class="n">mqtt</span><span class="o">.</span><span class="n">Client</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>to:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">client</span> <span class="o">=</span> <span class="n">mqtt</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">mqtt</span><span class="o">.</span><span class="n">CallbackAPIVersion</span><span class="o">.</span><span class="n">VERSION1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If that doesn’t work, then you can try installing an older version of paho-mqtt using:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="s2">&quot;paho-mqtt&lt;2.0.0&quot;</span>
+</pre></div>
+</div>
+<p>And keep line 37 as <code class="docutils literal notranslate"><span class="pre">client</span> <span class="pre">=</span> <span class="pre">mqtt.Client()</span></code></p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Guide to creating an e-textbook using Pumpt</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">PUMPT Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example.html">Example Page</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">E-Textbook Installation Guide (Windows)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#dependencies"><strong>Dependencies</strong></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#wsl-linux">WSL (Linux)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#python3">Python3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mosquitto">Mosquitto</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sphinx">Sphinx</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#paho-mqtt">Paho-mqtt</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#installation"><strong>Installation</strong></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#via-installation-wizard">Via installation wizard</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#uninstalling-the-textbook">Uninstalling the textbook</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#via-github">Via Github</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#editing-pages"><strong>Editing Pages</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-mosquitto"><strong>Running Mosquitto</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-simple-py"><strong>Running simple.py</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#personis"><strong>Personis</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common-issues"><strong>Common Issues</strong></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#docutils">Docutils</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#permission-denied">Permission Denied</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#typeerror-client-init">TypeError: Client.__init__()</a><ul class="simple">
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="content.html">Making Content</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Making User Models</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="example.html" title="previous chapter">Example Page</a></li>
+      <li>Next: <a href="content.html" title="next chapter">Making Content</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2024, Matthew Hendsch.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      
+      |
+      <a href="_sources/installation-guide.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
